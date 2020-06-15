@@ -4,8 +4,9 @@ import com.example.gallery.pojo.GalleryModel;
 
 import java.util.List;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GalleryRetrofitClient {
@@ -17,6 +18,7 @@ public class GalleryRetrofitClient {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         api = retrofit.create(GalleryApiService.class);
     }
@@ -28,16 +30,16 @@ public class GalleryRetrofitClient {
         return Instance;
     }
 
-    public Call<List<GalleryModel>> getPhotosInTheClient(){
+    public Observable<List<GalleryModel>> getPhotosInTheClient(){
         return api.getPhotosFromServer();
     }
 
-    public Call<List<GalleryModel>> getPostsInTheClient(){
-        return api.getPostsFromServer();
-    }
-
-    public Call<List<GalleryModel>> getEmailsInTheClient(){
-        return api.getEmailsFromServer();
-    }
+//    public Call<List<GalleryModel>> getPostsInTheClient(){
+//        return api.getPostsFromServer();
+//    }
+//
+//    public Call<List<GalleryModel>> getEmailsInTheClient(){
+//        return api.getEmailsFromServer();
+//    }
 
 }
